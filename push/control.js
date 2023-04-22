@@ -26,7 +26,7 @@ var inputdata = {
     selectbutton: false
 };
 
-navigator.geolocation.getCurrentPosition(function(position) {
+window.addEventListener("load", function(position) {
     socket.emit("inputdata", inputdata);
     
     var cover = document.createElement("div");
