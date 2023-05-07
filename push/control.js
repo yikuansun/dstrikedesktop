@@ -1,4 +1,6 @@
-var socket = io.connect("http://localhost:1999");
+var ipAddress = location.host.split(":")[0];
+
+var socket = io.connect(`http://${ipAddress}:1999`);
 
 var inputdata = {
     dpad: {

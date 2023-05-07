@@ -3,9 +3,12 @@
 var express = require("express");
 var socket = require("socket.io");
 var { execSync } = require("child_process");
+var getIP = require("./getIP");
+
+console.log(getIP());
 
 var app = express();
-var server = app.listen(1999, function(){
+var server = app.listen(1999, "0.0.0.0", function(){
     console.log("listening to requests on port 1999");
     var startCommand = {
         darwin: "open",
