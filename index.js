@@ -4,6 +4,7 @@ var express = require("express");
 var socket = require("socket.io");
 var { execSync } = require("child_process");
 var getIP = require("./getIP");
+const { mouse, left, right, up, down } = require("@nut-tree/nut-js");
 
 console.log(getIP());
 
@@ -31,7 +32,11 @@ io.on("connection", function(socket){
     console.log("made socket connection", socket.id);
     gpLink.connectionID = socket.id;
 
-    socket.on("inputdata", function(inputdata){
+    socket.on("inputdata", async function(inputdata){
         console.log("recieved input data", inputdata);
+        if (inputdata.joystick2.x != 0 || inputdata.joystick2.y != 0) {
+            await mouse.move(right(inputdata.joystick2.x * 100));
+            await mouse.move(down(inputdata.joystick2.y * 100));
+        }
     });
 });
