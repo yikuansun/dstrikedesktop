@@ -25,6 +25,9 @@ var io = socket(server, {
     allowEIO3: true,
 });
 
+keyboard.config.autoDelayMs = 10;
+mouse.config.autoDelayMs = 10;
+
 var gpLink = {
     connectionID: "",
     inputdata: {"dpad":{"right":false,"up":false,"left":false,"down":false},"joystick1":{"x":0,"y":0},"joystick2":{"x":0,"y":0},"elementpad":{"black":false,"yellow":false,"red":false,"blue":false},"menubutton":false,"xbutton":false,"selectbutton":false},
@@ -53,7 +56,7 @@ io.on("connection", function(socket){
         if (inputdata.dpad.down) await keyboard.pressKey(Key.Down);
         else await keyboard.releaseKey(Key.Down);
 
-        setTimeout(processInputs, 100); // requestAnimationFrame doesn't wokr
+        setTimeout(processInputs, 1000/60); // requestAnimationFrame doesn't wokr
     };
     processInputs();
 });
