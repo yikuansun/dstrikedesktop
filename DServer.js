@@ -1,7 +1,7 @@
 var express = require("express");
 var socket = require("socket.io");
 var getIP = require("./getIP");
-const { mouse, left, right, up, down, keyboard, Key } = require("@nut-tree/nut-js");
+const { mouse, left, right, up, down, keyboard, Key, Button } = require("@nut-tree/nut-js");
 
 console.log(getIP());
 
@@ -50,6 +50,8 @@ class DServer {
             await mouse.move(right(inputdata.joystick2.x * 100));
             await mouse.move(down(inputdata.joystick2.y * 100));
         }
+        if (inputdata.selectbutton) await mouse.pressButton(Button.LEFT);
+        else await mouse.releaseButton(Button.LEFT);
         if (inputdata.dpad.left) await keyboard.pressKey(Key.Left);
         else await keyboard.releaseKey(Key.Left);
         if (inputdata.dpad.right) await keyboard.pressKey(Key.Right);
