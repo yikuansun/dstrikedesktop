@@ -23,8 +23,8 @@ class DServer {
             allowEIO3: true,
         });
         
-        keyboard.config.autoDelayMs = 10;
-        mouse.config.autoDelayMs = 10;
+        keyboard.config.autoDelayMs = 1;
+        mouse.config.autoDelayMs = 1;
         
         this.gpLink = {
             connectionID: "",
