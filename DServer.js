@@ -60,6 +60,14 @@ class DServer {
         else await keyboard.releaseKey(Key.Up);
         if (inputdata.dpad.down) await keyboard.pressKey(Key.Down);
         else await keyboard.releaseKey(Key.Down);
+        if (inputdata.elementpad.blue) await keyboard.pressKey(Key.X);
+        else await keyboard.releaseKey(Key.X);
+        if (inputdata.elementpad.red) await keyboard.pressKey(Key.Z);
+        else await keyboard.releaseKey(Key.Z);
+        if (inputdata.elementpad.black) await keyboard.pressKey(Key.F);
+        else await keyboard.releaseKey(Key.F);
+        if (inputdata.elementpad.yellow) await keyboard.pressKey(Key.C);
+        else await keyboard.releaseKey(Key.C);
 
         setTimeout(() => { this.processInputs(); }, 1000/60); // requestAnimationFrame doesn't wokr
     };
