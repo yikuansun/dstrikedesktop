@@ -10,6 +10,21 @@ class DServer {
     server;
     io;
     gpLink;
+    keyBinding = {
+        selectbutton: Button.LEFT,
+        dpad: {
+            left: Key.Left,
+            right: Key.Right,
+            up: Key.Up,
+            down: Key.Down,
+        },
+        elementpad: {
+            blue: Key.X,
+            red: Key.Z,
+            black: Key.F,
+            yellow: Key.C,
+        },
+    };
 
     constructor() {
         this.app = express();
@@ -50,24 +65,24 @@ class DServer {
             await mouse.move(right(inputdata.joystick2.x * 100));
             await mouse.move(down(inputdata.joystick2.y * 100));
         }
-        if (inputdata.selectbutton) await mouse.pressButton(Button.LEFT);
-        else await mouse.releaseButton(Button.LEFT);
-        if (inputdata.dpad.left) await keyboard.pressKey(Key.Left);
-        else await keyboard.releaseKey(Key.Left);
-        if (inputdata.dpad.right) await keyboard.pressKey(Key.Right);
-        else await keyboard.releaseKey(Key.Right);
-        if (inputdata.dpad.up) await keyboard.pressKey(Key.Up);
-        else await keyboard.releaseKey(Key.Up);
-        if (inputdata.dpad.down) await keyboard.pressKey(Key.Down);
-        else await keyboard.releaseKey(Key.Down);
-        if (inputdata.elementpad.blue) await keyboard.pressKey(Key.X);
-        else await keyboard.releaseKey(Key.X);
-        if (inputdata.elementpad.red) await keyboard.pressKey(Key.Z);
-        else await keyboard.releaseKey(Key.Z);
-        if (inputdata.elementpad.black) await keyboard.pressKey(Key.F);
-        else await keyboard.releaseKey(Key.F);
-        if (inputdata.elementpad.yellow) await keyboard.pressKey(Key.C);
-        else await keyboard.releaseKey(Key.C);
+        if (inputdata.selectbutton) await mouse.pressButton(this.keyBinding.selectbutton);
+        else await mouse.releaseButton(this.keyBinding.selectbutton);
+        if (inputdata.dpad.left) await keyboard.pressKey(this.keyBinding.dpad.left);
+        else await keyboard.releaseKey(this.keyBinding.dpad.left);
+        if (inputdata.dpad.right) await keyboard.pressKey(this.keyBinding.dpad.right);
+        else await keyboard.releaseKey(this.keyBinding.dpad.right);
+        if (inputdata.dpad.up) await keyboard.pressKey(this.keyBinding.dpad.up);
+        else await keyboard.releaseKey(this.keyBinding.dpad.up);
+        if (inputdata.dpad.down) await keyboard.pressKey(this.keyBinding.dpad.down);
+        else await keyboard.releaseKey(this.keyBinding.dpad.down);
+        if (inputdata.elementpad.blue) await keyboard.pressKey(this.keyBinding.elementpad.blue);
+        else await keyboard.releaseKey(this.keyBinding.elementpad.blue);
+        if (inputdata.elementpad.red) await keyboard.pressKey(this.keyBinding.elementpad.red);
+        else await keyboard.releaseKey(this.keyBinding.elementpad.red);
+        if (inputdata.elementpad.black) await keyboard.pressKey(this.keyBinding.elementpad.black);
+        else await keyboard.releaseKey(this.keyBinding.elementpad.black);
+        if (inputdata.elementpad.yellow) await keyboard.pressKey(this.keyBinding.elementpad.yellow);
+        else await keyboard.releaseKey(this.keyBinding.elementpad.yellow);
 
         setTimeout(() => { this.processInputs(); }, 1000/60); // requestAnimationFrame doesn't wokr
     };
