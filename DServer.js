@@ -1,9 +1,6 @@
 var express = require("express");
 var socket = require("socket.io");
-var getIP = require("./getIP");
 const { mouse, left, right, up, down, keyboard, Key, Button } = require("@nut-tree/nut-js");
-
-console.log(getIP());
 
 class DServer {
     app;
