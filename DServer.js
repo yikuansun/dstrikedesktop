@@ -29,7 +29,7 @@ class DServer {
             console.log("listening to requests on port 1999");
         });
         
-        this.app.use(express.static("push"));
+        this.app.use(express.static(__dirname + "/push"));
         
         this.io = socket(this.server, {
             allowEIO3: true,
