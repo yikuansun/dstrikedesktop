@@ -1,6 +1,12 @@
-var ipAddress = location.host.split(":")[0];
-
-var socket = io.connect(`http://${ipAddress}:1999`);
+function sendInputData(inputdata) {
+    fetch("/inputdata", {
+        method: "POST",
+        body: JSON.stringify(inputdata),
+        headers: {
+            "Content-Type": "application/json",
+        },
+    });
+}
 
 var inputdata = {
     dpad: {
@@ -29,7 +35,7 @@ var inputdata = {
 };
 
 window.addEventListener("load", function(position) {
-    socket.emit("inputdata", inputdata);
+    sendInputData(inputdata);
     
     var cover = document.createElement("div");
     cover.style.backgroundColor = "black";
@@ -54,13 +60,13 @@ window.addEventListener("load", function(position) {
     upbutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.dpad.up = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     upbutton.addEventListener("touchend", function() {
         inputdata.dpad.up = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
     var leftbutton = new daize.sprite((12.5 * (window.innerHeight * 0.01)), (25 * (window.innerHeight * 0.01)), (12.5 * (window.innerHeight * 0.01)), (25 * (window.innerHeight * 0.01)), 3 * Math.PI / 2, "px");
@@ -69,13 +75,13 @@ window.addEventListener("load", function(position) {
     leftbutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.dpad.left = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     leftbutton.addEventListener("touchend", function() {
         inputdata.dpad.left = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
     var downbutton = new daize.sprite((12.5 * (window.innerHeight * 0.01)), (25 * (window.innerHeight * 0.01)), (25 * (window.innerHeight * 0.01)), (37.5 * (window.innerHeight * 0.01)), Math.PI, "px");
@@ -84,13 +90,13 @@ window.addEventListener("load", function(position) {
     downbutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.dpad.down = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     downbutton.addEventListener("touchend", function() {
         inputdata.dpad.down = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
     var rightbutton = new daize.sprite((12.5 * (window.innerHeight * 0.01)), (25 * (window.innerHeight * 0.01)), (37.5 * (window.innerHeight * 0.01)), (25 * (window.innerHeight * 0.01)), Math.PI / 2, "px");
@@ -99,13 +105,13 @@ window.addEventListener("load", function(position) {
     rightbutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.dpad.right = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     rightbutton.addEventListener("touchend", function() {
         inputdata.dpad.right = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
 
@@ -165,7 +171,7 @@ window.addEventListener("load", function(position) {
             draggable1.style.left = (draggable1clientrect.width / 2 + 0.35 * draggable1clientrect.width * Math.cos(angle)).toString() + "px";
             draggable1.style.top = (draggable1clientrect.height / 2 + 0.35 * draggable1clientrect.height * Math.sin(angle)).toString() + "px";
         }
-        if (joy1frame % 10 == 0) socket.emit("inputdata", inputdata);
+        if (joy1frame % 10 == 0) sendInputData(inputdata)
         joy1frame++;
     });
     draggable1.addEventListener("touchend", function() {
@@ -173,7 +179,7 @@ window.addEventListener("load", function(position) {
         draggable1.style.top = (draggable1clientrect.height / 2).toString() + "px";
         inputdata.joystick1.x = 0;
         inputdata.joystick1.y = 0;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
     });
 
     var joystick2 = document.createElement("div");
@@ -232,7 +238,7 @@ window.addEventListener("load", function(position) {
             draggable2.style.left = (draggable2clientrect.width / 2 + 0.35 * draggable2clientrect.width * Math.cos(angle)).toString() + "px";
             draggable2.style.top = (draggable2clientrect.height / 2 + 0.35 * draggable2clientrect.height * Math.sin(angle)).toString() + "px";
         }
-        if (joy2frame % 10 == 0) socket.emit("inputdata", inputdata);
+        if (joy2frame % 10 == 0) sendInputData(inputdata)
         joy2frame++;
     });
     draggable2.addEventListener("touchend", function() {
@@ -240,7 +246,7 @@ window.addEventListener("load", function(position) {
         draggable2.style.top = (draggable2clientrect.height / 2).toString() + "px";
         inputdata.joystick2.x = 0;
         inputdata.joystick2.y = 0;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
     });
     
     var elementpad = new daize.displayCanvas((50 * (window.innerHeight * 0.01)), (50 * (window.innerHeight * 0.01)), "px");
@@ -254,13 +260,13 @@ window.addEventListener("load", function(position) {
     elementpad.addsprite(blackbutton);
     blackbutton.addEventListener("touchstart", function(e) {
         inputdata.elementpad.black = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     blackbutton.addEventListener("touchend", function() {
         inputdata.elementpad.black = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
     var yellowbutton = new daize.sprite((15 * (window.innerHeight * 0.01)), (15 * (window.innerHeight * 0.01)), (10 * (window.innerHeight * 0.01)), (25 * (window.innerHeight * 0.01)), 0, "px");
@@ -269,13 +275,13 @@ window.addEventListener("load", function(position) {
     yellowbutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.elementpad.yellow = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     yellowbutton.addEventListener("touchend", function() {
         inputdata.elementpad.yellow = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
     var bluebutton = new daize.sprite((15 * (window.innerHeight * 0.01)), (15 * (window.innerHeight * 0.01)), (25 * (window.innerHeight * 0.01)), (40 * (window.innerHeight * 0.01)), 0, "px");
@@ -284,13 +290,13 @@ window.addEventListener("load", function(position) {
     bluebutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.elementpad.blue = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     bluebutton.addEventListener("touchend", function() {
         inputdata.elementpad.blue = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
     var redbutton = new daize.sprite((15 * (window.innerHeight * 0.01)), (15 * (window.innerHeight * 0.01)), (40 * (window.innerHeight * 0.01)), (25 * (window.innerHeight * 0.01)), 0, "px");
@@ -299,13 +305,13 @@ window.addEventListener("load", function(position) {
     redbutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.elementpad.red = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     redbutton.addEventListener("touchend", function() {
         inputdata.elementpad.red = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
 
@@ -322,13 +328,13 @@ window.addEventListener("load", function(position) {
     menubutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.menubutton = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     menubutton.addEventListener("touchend", function() {
         inputdata.menubutton = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
 
@@ -345,13 +351,13 @@ window.addEventListener("load", function(position) {
     xbutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.xbutton = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     xbutton.addEventListener("touchend", function() {
         inputdata.xbutton = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
 
@@ -368,13 +374,13 @@ window.addEventListener("load", function(position) {
     selectbutton.addEventListener("touchstart", function(e) {
         e.preventDefault();
         inputdata.selectbutton = true;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "0.5";
         navigator.vibrate(50);
     });
     selectbutton.addEventListener("touchend", function() {
         inputdata.selectbutton = false;
-        socket.emit("inputdata", inputdata);
+        sendInputData(inputdata)
         this.style.opacity = "1";
     });
     

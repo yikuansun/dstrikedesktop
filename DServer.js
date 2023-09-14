@@ -1,5 +1,4 @@
 var express = require("express");
-var socket = require("socket.io");
 const { mouse, left, right, up, down, keyboard, Key, Button } = require("@nut-tree/nut-js");
 
 class DServer {
@@ -30,10 +29,7 @@ class DServer {
         });
         
         this.app.use(express.static(__dirname + "/push"));
-        
-        this.io = socket(this.server, {
-            allowEIO3: true,
-        });
+        this.app.use(express.json());
         
         keyboard.config.autoDelayMs = 1;
         mouse.config.autoDelayMs = 1;
@@ -42,18 +38,17 @@ class DServer {
             connectionID: "",
             inputdata: {"dpad":{"right":false,"up":false,"left":false,"down":false},"joystick1":{"x":0,"y":0},"joystick2":{"x":0,"y":0},"elementpad":{"black":false,"yellow":false,"red":false,"blue":false},"menubutton":false,"xbutton":false,"selectbutton":false},
         };
-        this.io.on("connection", (socket) => {
-            console.log("made socket connection", socket.id);
-            this.gpLink.connectionID = socket.id;
         
-            socket.on("inputdata", (inputdata) => {
+            this.app.post("/inputdata", (req, res) => {
+                console.log(req.body);
+                let inputdata = req.body;
                 console.clear();
                 console.log("recieved input data", inputdata);
                 this.gpLink.inputdata = inputdata;
+                res.send("success");
             });
         
             this.processInputs();
-        });
     }
 
     async processInputs() {
